@@ -2,8 +2,10 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/nem0z/go-blockchain/blockchain/blockchain"
+	cl "github.com/nem0z/go-blockchain/blockchain/commandline"
 )
 
 func Handle(err error) {
@@ -13,11 +15,14 @@ func Handle(err error) {
 }
 
 func main() {
+	defer os.Exit(0)
 	err, bc := blockchain.New()
 	Handle(err)
 
+	defer bc.Database.DB.Close()
+
 	// bc.CreateAndAdd("First block with data")
 
-	err = bc.Display()
-	Handle(err)
+	cli := cl.CommandLine{Blockchain: bc}
+	cli.Run()
 }

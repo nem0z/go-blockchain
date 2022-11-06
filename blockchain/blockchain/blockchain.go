@@ -37,6 +37,7 @@ func (bc *Blockchain) Display() error {
 		return err
 	}
 
+	fmt.Println()
 	for {
 		err, b := iter.Next()
 
@@ -54,6 +55,8 @@ func (bc *Blockchain) Display() error {
 	}
 
 	fmt.Println("-----*-----")
+	fmt.Println()
+
 	return nil
 }
 
