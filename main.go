@@ -16,7 +16,7 @@ func main() {
 	err, bc := blockchain.New()
 	Handle(err)
 
-	bc.CreateAndAdd("First block with data")
+	// bc.CreateAndAdd("First block with data")
 
 	err = bc.Display()
 	Handle(err)
