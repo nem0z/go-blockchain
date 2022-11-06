@@ -21,7 +21,12 @@ func New() (error, *Blockchain) {
 	err, _ = bc.Database.Load()
 
 	if err != nil {
-		err := bc.Add(block.Genesis())
+		genesis := block.Genesis()
+		if err := genesis.Validate(); err != nil {
+			return err, &Blockchain{}
+		}
+
+		err := bc.Add(genesis)
 		if err != nil {
 			return err, &Blockchain{}
 		}
