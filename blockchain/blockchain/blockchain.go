@@ -2,6 +2,7 @@ package blockchain
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/nem0z/go-blockchain/blockchain/block"
 )
@@ -11,7 +12,12 @@ type Blockchain struct {
 }
 
 func New() *Blockchain {
-	return &Blockchain{Blocks: []*block.Block{block.Genesis()}}
+	genesis := block.Genesis()
+	if err := genesis.Validate(); err != nil {
+		log.Panic(err)
+	}
+
+	return &Blockchain{Blocks: []*block.Block{genesis}}
 }
 
 func (bc *Blockchain) Display() {
@@ -27,12 +33,18 @@ func (bc *Blockchain) Last() *block.Block {
 	return bc.Blocks[len(bc.Blocks)-1]
 }
 
-func (bc *Blockchain) AddBlock(b *block.Block) {
-	b.SetHash()
+func (bc *Blockchain) AddBlock(b *block.Block) error {
+
+	if err := b.Validate(); err != nil {
+		return err
+	}
+
 	bc.Blocks = append(bc.Blocks, b)
+	return nil
 }
 
-func (bc *Blockchain) CreateAndAddBlock(data string) {
+func (bc *Blockchain) CreateAndAdd(data string) error {
 	newBlock := &block.Block{Data: []byte(data), PrevHash: bc.Last().PrevHash}
-	bc.AddBlock(newBlock)
+
+	return bc.AddBlock(newBlock)
 }
