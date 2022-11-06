@@ -19,7 +19,7 @@ func main() {
 	err, bc := blockchain.New()
 	Handle(err)
 
-	defer bc.Database.DB.Close()
+	defer bc.Close()
 
 	// bc.CreateAndAdd("First block with data")
 

@@ -30,6 +30,10 @@ func New() (error, *Blockchain) {
 	return nil, bc
 }
 
+func (bc *Blockchain) Close() {
+	bc.Database.DB.Close()
+}
+
 func (bc *Blockchain) Display() error {
 	err, iter := bc.Iterator()
 
