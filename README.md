@@ -1,2 +1,5 @@
 # go-blockchain
-SImple blckchain implementation with Go
+Simple blckchain implementation with Go
+
+Todo :
+- Check why genesis block is validated twice

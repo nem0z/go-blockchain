@@ -1,12 +1,23 @@
 package main
 
-import "github.com/nem0z/go-blockchain/blockchain/blockchain"
+import (
+	"log"
+
+	"github.com/nem0z/go-blockchain/blockchain/blockchain"
+)
+
+func Handle(err error) {
+	if err != nil {
+		log.Panic(err)
+	}
+}
 
 func main() {
-	bc := blockchain.New()
-	bc.CreateAndAdd("First block data")
-	bc.CreateAndAdd("Second block data")
-	bc.CreateAndAdd("Third block data")
+	err, bc := blockchain.New()
+	Handle(err)
 
-	bc.Display()
+	bc.CreateAndAdd("First block with data")
+
+	err = bc.Display()
+	Handle(err)
 }
